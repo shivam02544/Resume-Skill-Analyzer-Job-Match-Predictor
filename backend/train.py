@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import LinearSVC
-from imblearn.over_sampling import SMOTE
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 import pickle
@@ -19,31 +18,21 @@ def train_model():
     # Drop rows with missing text or labels to prevent errors
     df = df.dropna(subset=['Resume', 'Category'])
     
-    # Filter out categories that only have 1 sample, as they break splitting and SMOTE
-    counts = df['Category'].value_counts()
-    valid_categories = counts[counts >= 2].index
-    df = df[df['Category'].isin(valid_categories)]
-    
     print("Cleaning resume text...")
     df['cleaned_resume'] = df['Resume'].apply(clean_resume_text)
     
     label_encoder = LabelEncoder()
     df['Category_Encoded'] = label_encoder.fit_transform(df['Category'])
     
-    # Enhance feature extraction: use bigrams, filter very common/rare words
-    tfidf = TfidfVectorizer(max_features=3000, ngram_range=(1, 2), max_df=0.95, min_df=2)
+    # You can tune max_features depending on your requirement
+    tfidf = TfidfVectorizer(max_features=1500)
     X = tfidf.fit_transform(df['cleaned_resume']).toarray()
     y = df['Category_Encoded'].values
     
-    print("Applying SMOTE to balance dataset...")
-    # There are very few samples for some classes (like 2), so k_neighbors must be smaller than the smallest class size
-    smote = SMOTE(sampling_strategy='auto', k_neighbors=1, random_state=42)
-    X_sm, y_sm = smote.fit_resample(X, y)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    X_train, X_test, y_train, y_test = train_test_split(X_sm, y_sm, test_size=0.2, random_state=42)
-    
-    print("Training LinearSVC Model on balanced data...")
-    model = LinearSVC(random_state=42, dual=False)
+    print("Training Naive Bayes Model...")
+    model = MultinomialNB()
     model.fit(X_train, y_train)
     
     y_pred = model.predict(X_test)
