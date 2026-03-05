@@ -1,0 +1,13 @@
+flask
+flask-cors
+pandas
+scikit-learn
+nltk
+pymongo
+PyPDF2
+gunicorn
+python-dotenv
+streamlit
+matplotlib
+seaborn
+graphviz
