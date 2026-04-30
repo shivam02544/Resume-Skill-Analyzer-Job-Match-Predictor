@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-secondary: #f8fafc;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --accent-glow: rgba(56, 189, 248, 0.2);
+    --primary: #0ea5e9;
+    --primary-hover: #0284c7;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --radius-lg: 1rem;
+    --radius-md: 0.75rem;
+    --radius-sm: 0.5rem;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col;
+    color: var(--text-primary);
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+@layer components {
+
+  /* ===== Card Component — the missing class ===== */
+  .simple-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .simple-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  @media (max-width: 640px) {
+    .simple-card {
+      padding: 1rem;
+      border-radius: var(--radius-md);
+    }
+  }
+
+  /* ===== Button ===== */
+  .btn-primary {
+    @apply relative overflow-hidden bg-sky-500 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 flex justify-center items-center gap-2;
+    box-shadow: 0 4px 14px 0 rgba(14, 165, 233, 0.39);
+  }
+
+  .btn-primary:not(:disabled):hover {
+    @apply bg-sky-400 translate-y-[-2px];
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+  }
+
+  .btn-primary:active {
+    @apply translate-y-px;
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed bg-slate-600 shadow-none;
+  }
+
+  /* ===== Input ===== */
+  .input-field {
+    @apply w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-slate-900 outline-none transition-all duration-300 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 placeholder-slate-400;
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+
+  /* ===== Mobile Card Layout for History ===== */
+  .history-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .history-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .history-card-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    flex-shrink: 0;
+  }
+
+  .history-card-value {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    text-align: right;
+    word-break: break-word;
+  }
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
