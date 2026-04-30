@@ -12,7 +12,7 @@ import numpy as np
 
 # Import customized utility scripts
 from utils.preprocessing import clean_resume_text
-from utils.skill_extractor import extract_skills, analyze_skill_gap
+from utils.skill_extractor import extract_skills, analyze_skill_gap, extract_experience
 
 # Setup Logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -93,6 +93,7 @@ def process_resume_prediction(resume_text):
     confidence = float(max(probabilities))
     predicted_category = label_encoder.inverse_transform([prediction])[0]
     skills = extract_skills(resume_text)
+    experience = extract_experience(resume_text)
     
     # Get top 3 predicted categories for alternative options
     top_indices = np.argsort(probabilities)[-3:][::-1]
@@ -104,7 +105,7 @@ def process_resume_prediction(resume_text):
         for idx in top_indices
     ]
     
-    return predicted_category, confidence, skills, top_roles
+    return predicted_category, confidence, skills, top_roles, experience
 
 @app.route("/predict", methods=["POST"])
 def predict_job_role():
@@ -144,7 +145,7 @@ def predict_job_role():
         logger.info(f"Successfully digested resume text for {name}. Running prediction...")
         
         # Machine learning inference
-        predicted_category, confidence, skills, top_roles = process_resume_prediction(resume_text)
+        predicted_category, confidence, skills, top_roles, experience = process_resume_prediction(resume_text)
         
         logger.info(f"Prediction Success: {name} -> {predicted_category} ({confidence:.2f})")
         
@@ -158,6 +159,7 @@ def predict_job_role():
             record = {
                 "name": name,
                 "skills": skills,
+                "experience": experience,
                 "job_role": predicted_category,
                 "confidence": confidence,
                 "top_roles": top_roles,
@@ -173,6 +175,7 @@ def predict_job_role():
         response_data = {
             "job_role": predicted_category,
             "skills": skills,
+            "experience": f"{experience} Years" if experience > 0 else "Not Found",
             "confidence": f"{confidence * 100:.2f}%",
             "top_roles": top_roles
         }

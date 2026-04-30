@@ -1,0 +1,89 @@
+{
+  "skills": [
+    {
+      "name": "Python",
+      "synonyms": ["python", "py", "python3", "cpython"],
+      "category": "Backend",
+      "resource_url": "https://www.python.org/doc/"
+    },
+    {
+      "name": "Java",
+      "synonyms": ["java", "jdk", "jre", "java8", "java11"],
+      "category": "Backend",
+      "resource_url": "https://docs.oracle.com/en/java/"
+    },
+    {
+      "name": "React",
+      "synonyms": ["react", "react.js", "reactjs", "react native"],
+      "category": "Frontend",
+      "resource_url": "https://react.dev/learn"
+    },
+    {
+      "name": "SQL",
+      "synonyms": ["sql", "mysql", "postgresql", "oracle sql", "pl/sql", "sqlite"],
+      "category": "Database",
+      "resource_url": "https://www.w3schools.com/sql/"
+    },
+    {
+      "name": "MongoDB",
+      "synonyms": ["mongodb", "mongo", "nosql", "mongoose"],
+      "category": "Database",
+      "resource_url": "https://www.mongodb.com/docs/"
+    },
+    {
+      "name": "AWS",
+      "synonyms": ["aws", "amazon web services", "ec2", "s3", "lambda", "rds"],
+      "category": "Cloud",
+      "resource_url": "https://aws.amazon.com/training/"
+    },
+    {
+      "name": "Machine Learning",
+      "synonyms": ["machine learning", "ml", "ai", "artificial intelligence", "deep learning", "nlp"],
+      "category": "Data Science",
+      "resource_url": "https://www.coursera.org/specializations/machine-learning-introduction"
+    },
+    {
+      "name": "Javascript",
+      "synonyms": ["javascript", "js", "es6", "node", "nodejs"],
+      "category": "Frontend",
+      "resource_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+    },
+    {
+      "name": "HTML",
+      "synonyms": ["html", "html5"],
+      "category": "Frontend",
+      "resource_url": "https://www.w3schools.com/html/"
+    },
+    {
+      "name": "CSS",
+      "synonyms": ["css", "css3", "sass", "scss", "tailwind", "bootstrap"],
+      "category": "Frontend",
+      "resource_url": "https://web.dev/learn/css/"
+    },
+    {
+      "name": "Docker",
+      "synonyms": ["docker", "dockerfile", "docker-compose"],
+      "category": "Cloud",
+      "resource_url": "https://docs.docker.com/get-started/"
+    },
+    {
+      "name": "Kubernetes",
+      "synonyms": ["kubernetes", "k8s"],
+      "category": "Cloud",
+      "resource_url": "https://kubernetes.io/docs/tutorials/"
+    },
+    {
+      "name": "Tensorflow",
+      "synonyms": ["tensorflow", "tf"],
+      "category": "Data Science",
+      "resource_url": "https://www.tensorflow.org/learn"
+    },
+    {
+      "name": "Pytorch",
+      "synonyms": ["pytorch", "torch"],
+      "category": "Data Science",
+      "resource_url": "https://pytorch.org/tutorials/"
+    }
+  ],
+  "categories": ["Frontend", "Backend", "Database", "Cloud", "Data Science"]
+}

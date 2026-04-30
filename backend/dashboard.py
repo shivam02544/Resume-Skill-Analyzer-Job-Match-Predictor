@@ -8,6 +8,8 @@ import re
 import matplotlib.pyplot as plt
 import seaborn as sns
 from PyPDF2 import PdfReader
+from wordcloud import WordCloud
+from utils.skill_extractor import extract_skills, analyze_skill_gap, extract_experience
 
 # Configure the Streamlit page
 st.set_page_config(
@@ -144,6 +146,14 @@ def extract_text_from_pdf(file_stream):
     except Exception as e:
         return ""
 
+def generate_wordcloud(text):
+    wc = WordCloud(width=800, height=400, background_color="#0E1117", colormap="Blues").generate(text)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.imshow(wc, interpolation='bilinear')
+    ax.axis("off")
+    fig.patch.set_alpha(0.0)
+    return fig
+
 def render_tags(skills, is_matched=True):
     if not skills:
         return "<i>None</i>"
@@ -240,7 +250,22 @@ with tab1:
                                     f"<p>Confidence: {pred_conf*100:.1f}%</p>"
                                     f"</div>", 
                                     unsafe_allow_html=True)
+                    
                     with col2:
+                        experience = extract_experience(resume_text)
+                        seniority = "Senior" if experience >= 8 else "Mid-Level" if experience >= 3 else "Junior"
+                        st.markdown(f"<div class='metric-card'>"
+                                    f"<h4>Detected Experience</h4>"
+                                    f"<h2 style='color:#0ea5e9;'>{experience} Years</h2>"
+                                    f"<p>Seniority Level: <b>{seniority}</b></p>"
+                                    f"</div>", 
+                                    unsafe_allow_html=True)
+                    
+                    st.markdown("---")
+                    
+                    # Row 2: Match Score & Word Cloud
+                    col_score, col_wc = st.columns([1, 2])
+                    with col_score:
                         score = gap_analysis["match_score"]
                         color = "#4CAF50" if score >= 70 else "#FFC107" if score >= 40 else "#F44336"
                         st.markdown(f"<div class='metric-card'>"
@@ -249,6 +274,9 @@ with tab1:
                                     f"<div class='progress-bg'><div class='progress-fill' style='width: {score}%; background-color: {color};'></div></div>"
                                     f"</div>", 
                                     unsafe_allow_html=True)
+                    with col_wc:
+                        st.markdown("#### Skill Word Cloud")
+                        st.pyplot(generate_wordcloud(resume_text))
 
                     st.markdown("---")
                     
